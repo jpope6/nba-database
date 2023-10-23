@@ -8,6 +8,7 @@ const Searchbar = () => {
 
     const handleSearchChange = (e) => {
         setSearchDate(e.target.value);
+        console.log(" the date was set to: " + e.target.value);
     };
 
     return (
