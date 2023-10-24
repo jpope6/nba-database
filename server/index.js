@@ -10,15 +10,15 @@ app.use(express.json());
 
 const db = mysql.createConnection({
   user: "root",
-  host: "127.0.0.1",
+  host: "localhost",
   password: "",
   database: "nba-db",
 });
 
 // Define a simple route
-app.get("/date-request", (req, res) => {
+app.get("/standings", (req, res) => {
 
-  db.query("SELECT * FROM Standings", (err, result) => {
+  db.query("SELECT PTS_Home FROM games WHERE GAME_DATE_EST", (err, result) => {
     if (err) {
       console.log(err);
     } else {
