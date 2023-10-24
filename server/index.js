@@ -18,7 +18,11 @@ const db = mysql.createConnection({
 // Define a simple route
 app.get("/standings", (req, res) => {
 
-  db.query("SELECT PTS_Home FROM games WHERE GAME_DATE_EST", (err, result) => {
+  const { date } = req.query;
+
+  console.log(date);
+
+  db.query("SELECT PTS_Home FROM games WHERE GAME_DATE_EST = ?", [date], (err, result) => {
     if (err) {
       console.log(err);
     } else {

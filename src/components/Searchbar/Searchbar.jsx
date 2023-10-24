@@ -19,10 +19,19 @@ const Searchbar = () => {
     };
 
     const handleSubmit = () => {
-        Axios.get("http://localhost:3001/standings")
+        Axios.get("http://localhost:3001/standings", {
+            params: {
+                date: searchDate
+            }
+        })
             .then((response) => {
                 setStandings(response.data);
+                console.log(response.data);
             })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+
     }
 
 
@@ -36,10 +45,10 @@ const Searchbar = () => {
             />
             <div className="standings">
                 {standings.map((val, key) => (
-                    <h3 key={key}>Name: {val.PTS_home} </h3>
+                    <h3 key={key}>Name: {val.PTS_Home} </h3>
                 ))}
             </div>
-            <button onClick={handleSubmit} >Submit</button>
+            <button onClick={handleSubmit}>Submit</button>
         </div>
 
     );
