@@ -1,5 +1,5 @@
 import "./Searchbar.css";
-import Axios from "axios";
+import { useNbaData } from "../../hooks/useNbaData";
 
 import React, { useState } from "react";
 import search from "../../images/search-solid.svg";
@@ -7,6 +7,7 @@ import search from "../../images/search-solid.svg";
 const Searchbar = () => {
     const [searchDate, setSearchDate] = useState("");
     const [standings, setStandings] = useState([])
+    const { fetchStandings } = useNbaData();
 
     const handleSearchChange = (e) => {
         setSearchDate(e.target.value);
@@ -18,20 +19,9 @@ const Searchbar = () => {
         //     })
     };
 
-    const handleSubmit = () => {
-        Axios.get("http://localhost:3001/standings", {
-            params: {
-                date: searchDate
-            }
-        })
-            .then((response) => {
-                setStandings(response.data);
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-
+    const handleSubmit = async () => {
+        const ans = await fetchStandings(searchDate);
+        console.log(ans);
     }
 
 
