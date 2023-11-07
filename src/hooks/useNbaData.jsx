@@ -21,7 +21,24 @@ export function useNbaData() {
       console.log(e);
     }
   };
+  const fetchTeamDetails = async (homeTeamID) => {
+    try {
+      console.log(`${backendUrl}/homeTeamDetails`);
+      console.log("the home team IDs from front end are: ", homeTeamID)
+      const response2 = await axios.get(
+        `${backendUrl}/homeTeamDetails`, {
+        params: {
+          hometeam: homeTeamID
+        }
+      })
+
+      return response2.data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  
 
 
-  return { fetchStandings }
+  return { fetchStandings,fetchTeamDetails  }
 };

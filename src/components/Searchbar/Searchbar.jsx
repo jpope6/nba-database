@@ -7,7 +7,9 @@ import search from "../../images/search-solid.svg";
 const Searchbar = () => {
     const [searchDate, setSearchDate] = useState("");
     const [standings, setStandings] = useState([])
-    const { fetchStandings } = useNbaData();
+    const [homeTeamID, setHomeTeamID] = useState([])
+    const {fetchStandings, fetchTeamDetails } = useNbaData();
+    
 
     const handleSearchChange = (e) => {
         setSearchDate(e.target.value);
@@ -20,12 +22,23 @@ const Searchbar = () => {
     };
 
     const handleSubmit = async () => {
+        console.log("in handle submit, here are home team ids")
         const ans = await fetchStandings(searchDate);
         setStandings(ans.result);
-        console.log(ans);
-        console.log("in the searc bar.jsx")
         console.log(ans.result);
+
+        const ans2 = ans.result.map((item) => item.HOME_TEAM_ID);
+        setHomeTeamID(ans2);
+        console.log("here are the team IDS :", ans2);
+        console.log("here is the updated homeTeamID state: ", homeTeamID)
+
+
+        const ans3 = await fetchTeamDetails(homeTeamID);
+        console.log("here are supposed to be the team details", ans3);
+        
+        
     }
+    
 
 
     return (
@@ -38,7 +51,7 @@ const Searchbar = () => {
             />
             <div className="standings">
                 {standings.map((val, key) => (
-                    <h3 key={key}> Season: {val.SEASON}&nbsp;&nbsp;&nbsp; Game ID: {val.GAME_ID}&nbsp;&nbsp;&nbsp; Home Team ID: {val.HOME_TEAM_ID}&nbsp;&nbsp;&nbsp; Visitor Team ID: {val.VISITOR_TEAM_ID} </h3>
+                    <h3 key={key}> GAME ID: {val.GAME_ID}&nbsp;&nbsp;&nbsp; Season: {val.SEASON}&nbsp;&nbsp;&nbsp; Game ID: {val.GAME_ID}&nbsp;&nbsp;&nbsp; Home Team ID: {val.HOME_TEAM_ID}&nbsp;&nbsp;&nbsp; Visitor Team ID: {val.VISITOR_TEAM_ID} </h3>
                 ))}
             </div>
             <button onClick={handleSubmit}>Submit</button>
