@@ -21,7 +21,10 @@ const Searchbar = () => {
 
     const handleSubmit = async () => {
         const ans = await fetchStandings(searchDate);
+        setStandings(ans.result);
         console.log(ans);
+        console.log("in the searc bar.jsx")
+        console.log(ans.result);
     }
 
 
@@ -35,7 +38,7 @@ const Searchbar = () => {
             />
             <div className="standings">
                 {standings.map((val, key) => (
-                    <h3 key={key}>Name: {val.PTS_Home} </h3>
+                    <h3 key={key}> Season: {val.SEASON}&nbsp;&nbsp;&nbsp; Game ID: {val.GAME_ID}&nbsp;&nbsp;&nbsp; Home Team ID: {val.HOME_TEAM_ID}&nbsp;&nbsp;&nbsp; Visitor Team ID: {val.VISITOR_TEAM_ID} </h3>
                 ))}
             </div>
             <button onClick={handleSubmit}>Submit</button>

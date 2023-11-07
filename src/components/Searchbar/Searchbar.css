@@ -17,6 +17,9 @@
   
   cursor:pointer;
 }
+.standings{
+  color: white
+}
 
 .search-input:focus {
   outline:none;

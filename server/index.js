@@ -10,8 +10,8 @@ app.use(express.json());
 
 const db = mysql.createConnection({
   user: "root",
-  host: "localhost", // 127.0.0.1
-  password: "",
+  host: "127.0.0.1", // 127.0.0.1, localhost
+  password: "Foziaslm12",
   database: "nba-db",
 });
 
@@ -19,8 +19,8 @@ const db = mysql.createConnection({
 app.get("/standings", (req, res) => {
   try {
     const { date } = req.query;
-
-    const query = "SELECT PTS_Home FROM games WHERE GAME_DATE_EST = ?";
+    //const query = "SELECT * FROM games WHERE GAME_DATE_EST = ?";
+    const query = "SELECT * FROM games WHERE GAME_DATE_EST = ?";
     db.query(query, [date], (err, result) => {
       if (err) {
         console.log(err);
