@@ -1,7 +1,7 @@
 import "./Searchbar.css";
 import { useNbaData } from "../../hooks/useNbaData";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import search from "../../images/search-solid.svg";
 
 const Searchbar = () => {
@@ -29,15 +29,31 @@ const Searchbar = () => {
 
         const ans2 = ans.result.map((item) => item.HOME_TEAM_ID);
         setHomeTeamID(ans2);
-        console.log("here are the team IDS :", ans2);
-        console.log("here is the updated homeTeamID state: ", homeTeamID)
+        // console.log("here are the team IDS :", ans2);
+        // console.log("here is the updated homeTeamID state: ", homeTeamID)
 
 
-        const ans3 = await fetchTeamDetails(homeTeamID);
-        console.log("here are supposed to be the team details", ans3);
+        // const ans3 = await fetchTeamDetails(homeTeamID);
+        // console.log("here are supposed to be the team details", ans3);
         
         
     }
+
+    useEffect(() => {
+        async function getTeamDetails() {
+            try {
+                console.log("useEffect", homeTeamID);
+                for (const team of homeTeamID) {
+                    const ans3 = await fetchTeamDetails(team);
+                    console.log("here are supposed to be the team details", ans3);  
+                }
+            } catch (e) {
+                console.error("Error fetching home team IDs: ", e);
+            }
+        }
+
+        getTeamDetails();
+    }, [homeTeamID]);
     
 
 

@@ -21,6 +21,7 @@ export function useNbaData() {
       console.log(e);
     }
   };
+
   const fetchTeamDetails = async (homeTeamID) => {
     try {
       console.log(`${backendUrl}/homeTeamDetails`);
@@ -31,8 +32,8 @@ export function useNbaData() {
           hometeam: homeTeamID
         }
       })
-
-      return response2.data;
+      
+      return response2.data.result;
     } catch (e) {
       console.log(e);
     }
