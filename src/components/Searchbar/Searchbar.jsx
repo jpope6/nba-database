@@ -6,10 +6,11 @@ import search from "../../images/search-solid.svg";
 
 const Searchbar = () => {
     const [searchDate, setSearchDate] = useState("");
-    const [standings, setStandings] = useState([])
-    const [homeTeamID, setHomeTeamID] = useState([])
-    const {fetchStandings, fetchTeamDetails } = useNbaData();
-    
+    const [standings, setStandings] = useState([]);
+    const [homeTeamID, setHomeTeamID] = useState([]);
+    const [data, setData] = useState([]);
+    const { fetchStandings, fetchTeamDetails } = useNbaData();
+
 
     const handleSearchChange = (e) => {
         setSearchDate(e.target.value);
@@ -35,26 +36,32 @@ const Searchbar = () => {
 
         // const ans3 = await fetchTeamDetails(homeTeamID);
         // console.log("here are supposed to be the team details", ans3);
-        
-        
+
+
     }
 
     useEffect(() => {
         async function getTeamDetails() {
             try {
                 console.log("useEffect", homeTeamID);
+                const newData = [];
                 for (const team of homeTeamID) {
-                    const ans3 = await fetchTeamDetails(team);
-                    console.log("here are supposed to be the team details", ans3);  
+                    const details = await fetchTeamDetails(team)
+                    console.log("here are supposed to be the team details", details);
+
+                    newData.push(details);
                 }
+
+                setData(newData);
             } catch (e) {
                 console.error("Error fetching home team IDs: ", e);
             }
         }
 
         getTeamDetails();
+        console.log('useEffect: ', data);
     }, [homeTeamID]);
-    
+
 
 
     return (
@@ -66,9 +73,17 @@ const Searchbar = () => {
                 onChange={(e) => handleSearchChange(e)}
             />
             <div className="standings">
-                {standings.map((val, key) => (
-                    <h3 key={key}> GAME ID: {val.GAME_ID}&nbsp;&nbsp;&nbsp; Season: {val.SEASON}&nbsp;&nbsp;&nbsp; Game ID: {val.GAME_ID}&nbsp;&nbsp;&nbsp; Home Team ID: {val.HOME_TEAM_ID}&nbsp;&nbsp;&nbsp; Visitor Team ID: {val.VISITOR_TEAM_ID} </h3>
+                {data.map((details, index) => (
+                    <h3 key={index}>
+                        {`${details.CITY} ${details.NICKNAME}`}
+                    </h3>
                 ))}
+
+
+
+                {/* {standings.map((val, key) => (
+                    <h3 key={key}> GAME ID: {val.GAME_ID}&nbsp;&nbsp;&nbsp; Season: {val.SEASON}&nbsp;&nbsp;&nbsp; Game ID: {val.GAME_ID}&nbsp;&nbsp;&nbsp; Home Team ID: {val.HOME_TEAM_ID}&nbsp;&nbsp;&nbsp; Visitor Team ID: {val.VISITOR_TEAM_ID} </h3>
+                ))} */}
             </div>
             <button onClick={handleSubmit}>Submit</button>
         </div>

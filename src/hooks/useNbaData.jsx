@@ -31,9 +31,11 @@ export function useNbaData() {
         params: {
           hometeam: homeTeamID
         }
-      })
+      });
+
+      console.log('Hook', response2.data);
       
-      return response2.data.result;
+      return response2.data.details;
     } catch (e) {
       console.log(e);
     }

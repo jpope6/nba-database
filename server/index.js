@@ -10,8 +10,8 @@ app.use(express.json());
 
 const db = mysql.createConnection({
   user: "root",
-  host: "127.0.0.1", // 127.0.0.1, localhost
-  password: "",
+  host: "localhost", // 127.0.0.1, localhost
+  password: "February#14",
   database: "nba-db",
 });
 
@@ -44,7 +44,7 @@ app.get("/homeTeamDetails", (req, res) => {
     const { hometeam } = req.query;
 
     //const query = "SELECT * FROM games WHERE GAME_DATE_EST = ?";
-    const query = "SELECT * FROM teams WHERE TEAM_ID = ?";
+    const query = "SELECT CITY, NICKNAME FROM teams WHERE TEAM_ID = ?";
     db.query(query, [hometeam], (err, result) => {
       if (err) {
         console.log(err);
@@ -52,8 +52,9 @@ app.get("/homeTeamDetails", (req, res) => {
         res.status(500).json({ error: "Database query failed" });
       } else {
         // Query was successful, you can access the result here
-        console.log(result);
-        res.status(200).json({ result });
+        const details = result[0]
+        console.log(details)
+        res.status(200).json({ details });
       }
     });
   } catch (error) {
