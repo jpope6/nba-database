@@ -5,43 +5,68 @@ import axios from "axios";
 export function useNbaData() {
   const backendUrl = useContext(BackendUrlContext);
 
-  const fetchStandings = async (searchDate) => {
+  const fetchGameIDs = async (searchDate) => {
     try {
-      console.log(`${backendUrl}/standings`);
-
       const response = await axios.get(
-        `${backendUrl}/standings`, {
+        `${backendUrl}/getGameIDs`, {
         params: {
           date: searchDate
         }
       })
 
-      return response.data;
+      return response.data.gameIDs;
     } catch (e) {
       console.log(e);
     }
   };
 
-  const fetchTeamDetails = async (homeTeamID) => {
+  const fetchTeamDetails = async (teamID) => {
     try {
-      console.log(`${backendUrl}/homeTeamDetails`);
-      console.log("the home team IDs from front end are: ", homeTeamID)
-      const response2 = await axios.get(
-        `${backendUrl}/homeTeamDetails`, {
+      const response = await axios.get(
+        `${backendUrl}/getTeamDetails`, {
         params: {
-          hometeam: homeTeamID
+          teamID: teamID
         }
       });
 
-      console.log('Hook', response2.data);
-      
-      return response2.data.details;
+      return response.data.teamDetails;
     } catch (e) {
       console.log(e);
     }
   };
-  
+
+  const fetchGameDetails = async (gameIDs) => {
+    try {
+      const response = await axios.get(
+        `${backendUrl}/getGameDetails`, {
+        params: {
+          gameIDs: gameIDs
+        }
+      });
+
+      return response.data.gameDetailsArray;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const fetchPlayerDetails = async (gameID, teamID) => {
+    try {
+      const response = await axios.get(
+        `${backendUrl}/getPlayerDetails`, {
+        params: {
+          gameID: gameID,
+          teamID: teamID
+        }
+      });
+
+      return response.data.playerDetails;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
 
-  return { fetchStandings,fetchTeamDetails  }
+
+  return { fetchGameIDs, fetchTeamDetails, fetchGameDetails, fetchPlayerDetails }
 };
