@@ -3,6 +3,14 @@ import Spinner from "../Spinner/Spinner";
 import { teamLogos } from "../../images/logos";
 import Switch from "react-switch";
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 
 import "./Accordion.css"
 
@@ -30,6 +38,7 @@ function AccordianItem({ gameData, teamData, playerData }) {
 
     return (
         <div className="accordion-item">
+
             <div className="accordion-title-wrapper" onClick={handleItemClicked}>
 
                 <div className="team">
@@ -41,15 +50,18 @@ function AccordianItem({ gameData, teamData, playerData }) {
                         />
                     )}
 
-                    <h3>{`${teamData[gameData.VISITOR_TEAM_ID]?.CITY} ${teamData[gameData.VISITOR_TEAM_ID]?.NICKNAME}`}</h3>
-                    <h3>{`${gameData.PTS_AWAY}`}</h3>
+                    <h3 className="words">{`${teamData[gameData.VISITOR_TEAM_ID]?.CITY} ${teamData[gameData.VISITOR_TEAM_ID]?.NICKNAME}`}</h3>
                 </div>
 
-                <h3>@</h3>
+
+                <h3 className="words">{`${gameData.PTS_AWAY}`}</h3>
+
+                <h3 className="words">@</h3>
+
+                <h3 className="words">{`${gameData.PTS_HOME}`}</h3>
 
                 <div className="team">
-                    <h3>{`${gameData.PTS_HOME}`}</h3>
-                    <h3>{`${teamData[gameData.HOME_TEAM_ID]?.CITY} ${teamData[gameData.HOME_TEAM_ID]?.NICKNAME}`}</h3>
+                    <h3 className="words">{`${teamData[gameData.HOME_TEAM_ID]?.CITY} ${teamData[gameData.HOME_TEAM_ID]?.NICKNAME}`}</h3>
 
                     {teamData[gameData.HOME_TEAM_ID] && (
                         <img
@@ -60,18 +72,16 @@ function AccordianItem({ gameData, teamData, playerData }) {
                     )}
                 </div>
 
-
             </div>
+
             <div className={`accordion-description ${expanded ? "expand-accordion-item" : ""}`}>
                 {playerData ? (
                     <div>
                         <div className="description-header">
-                            <h3>
+                            <h3 className="words">
                                 {`${selectedTeam === 'home'
-                                    ?
-                                    teamData[gameData.HOME_TEAM_ID].NICKNAME
-                                    :
-                                    teamData[gameData.VISITOR_TEAM_ID].NICKNAME}`} Stats
+                                    ? teamData[gameData.HOME_TEAM_ID].NICKNAME
+                                    : teamData[gameData.VISITOR_TEAM_ID].NICKNAME}`} Stats
                             </h3>
                             <Switch
                                 checked={selectedTeam === 'home' ? true : false}
@@ -89,21 +99,54 @@ function AccordianItem({ gameData, teamData, playerData }) {
                                 id="material-switch"
                             />
                         </div>
-                        {selectedTeam === 'home'
-                            ? playerData.home.map((player, index) => (
-                                <div key={index}>
-                                    <p>{player.PLAYER_NAME}</p>
-                                    <p>MIN: {player.MIN}, PTS: {player.PTS}, AST: {player.AST}, REB: {player.REB}, BLK: {player.BLK}, STL: {player.STL}, TO: {player.TO}, PLUS_MINUS: {player.PLUS_MINUS}</p>
-                                </div>
-                            ))
-                            : playerData.visitor.map((player, index) => (
-                                <div key={index}>
-                                    <p>{player.PLAYER_NAME}</p>
-                                    <p>MIN: {player.MIN}, PTS: {player.PTS}, AST: {player.AST}, REB: {player.REB}, BLK: {player.BLK}, STL: {player.STL}, TO: {player.TO}, PLUS_MINUS: {player.PLUS_MINUS}</p>
-                                </div>
-                            ))
-                        }
-                    </div>
+
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Players</TableCell>
+                                        <TableCell align="right">MIN</TableCell>
+                                        <TableCell align="right">PTS</TableCell>
+                                        <TableCell align="right">AST</TableCell>
+                                        <TableCell align="right">REB</TableCell>
+                                        <TableCell align="right">BLK</TableCell>
+                                        <TableCell align="right">STL</TableCell>
+                                        <TableCell align="right">TO</TableCell>
+                                        <TableCell align="right">+/-</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {selectedTeam === 'home'
+                                        ? playerData.home.map((player, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell>{player.PLAYER_NAME}</TableCell>
+                                                <TableCell align="right">{player.MIN}</TableCell>
+                                                <TableCell align="right">{player.PTS}</TableCell>
+                                                <TableCell align="right">{player.AST}</TableCell>
+                                                <TableCell align="right">{player.REB}</TableCell>
+                                                <TableCell align="right">{player.BLK}</TableCell>
+                                                <TableCell align="right">{player.STL}</TableCell>
+                                                <TableCell align="right">{player.TO}</TableCell>
+                                                <TableCell align="right">{player.PLUS_MINUS}</TableCell>
+                                            </TableRow>
+                                        ))
+                                        : playerData.visitor.map((player, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell>{player.PLAYER_NAME}</TableCell>
+                                                <TableCell align="right">{player.MIN}</TableCell>
+                                                <TableCell align="right">{player.PTS}</TableCell>
+                                                <TableCell align="right">{player.AST}</TableCell>
+                                                <TableCell align="right">{player.REB}</TableCell>
+                                                <TableCell align="right">{player.BLK}</TableCell>
+                                                <TableCell align="right">{player.STL}</TableCell>
+                                                <TableCell align="right">{player.TO}</TableCell>
+                                                <TableCell align="right">{player.PLUS_MINUS}</TableCell>
+                                            </TableRow>
+                                        ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>                    </div>
                 ) : (
                     <div className="spinner-container">
                         <Spinner />

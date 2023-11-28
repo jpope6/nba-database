@@ -1,5 +1,5 @@
 .header {
-    background: black;
+    background-color: rgba(35, 39, 47, 255);
     width: 100%;
     display: flex;
     flex-direction: column;

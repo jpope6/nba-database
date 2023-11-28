@@ -2,7 +2,9 @@ import "./Searchbar.css";
 import { useNbaData } from "../../hooks/useNbaData";
 
 import React, { useEffect, useState } from "react";
-import search from "../../images/search-solid.svg";
+
+import { AwesomeButton } from 'react-awesome-button';
+import 'react-awesome-button/dist/styles.css';
 
 const Searchbar = ({ setGameIDs, setGameData, setTeamData, setPlayerData }) => {
     const [searchDate, setSearchDate] = useState("");
@@ -93,15 +95,12 @@ const Searchbar = ({ setGameIDs, setGameData, setTeamData, setPlayerData }) => {
                 placeholder="Seach"
                 onChange={(e) => handleSearchChange(e)}
             />
-            <div className="standings">
-                {/*    {data.map((details, index) => (
-                    <h3 key={index}>
-                        {`${details.CITY} ${details.NICKNAME}`}
-                    </h3>
-                ))}
-            */}
-            </div>
-            <button onClick={handleSubmit}>Submit</button>
+            <AwesomeButton
+                type="primary"
+                onPress={handleSubmit}
+            >
+                Primary
+            </AwesomeButton>
         </div>
 
     );
