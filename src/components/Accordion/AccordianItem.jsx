@@ -18,11 +18,6 @@ function AccordianItem({ gameData, teamData, playerData }) {
     const [expanded, setExpanded] = useState(false);
     const [selectedTeam, setSelectedTeam] = useState('home');
 
-
-    console.log(gameData);
-    console.log('team', teamData);
-    console.log(playerData);
-
     function handleItemClicked() {
         setExpanded((expanded) => !expanded);
     }

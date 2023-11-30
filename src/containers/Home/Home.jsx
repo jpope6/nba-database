@@ -7,27 +7,11 @@ import Accordian from "../../components/Accordion/Accordion";
 import AccordianItem from "../../components/Accordion/AccordianItem";
 
 export default function Home() {
+    const [searchDate, setSearchDate] = useState("");
     const [gameIDs, setGameIDs] = useState([]);
     const [gameData, setGameData] = useState([]);
     const [teamData, setTeamData] = useState({});
     const [playerData, setPlayerData] = useState({});
-
-
-    useEffect(() => {
-        console.log("gameIDs changed:", gameIDs);
-    }, [gameIDs]);
-
-    useEffect(() => {
-        console.log("gameData changed:", gameData);
-    }, [gameData]);
-
-    useEffect(() => {
-        console.log("teamData changed:", teamData);
-    }, [teamData]);
-
-    useEffect(() => {
-        console.log("playerData changed:", playerData);
-    }, [playerData]);
 
     return (
         <div className="home">
@@ -35,21 +19,29 @@ export default function Home() {
             <div className="main">
                 <h1 className="title">Pick a date between the 2004 (10/28/03) and 2022 (6/6/22) season.</h1>
                 <Searchbar
+                    searchDate={searchDate}
+                    setSearchDate={setSearchDate}
                     setGameIDs={setGameIDs}
                     setGameData={setGameData}
                     setTeamData={setTeamData}
                     setPlayerData={setPlayerData}
                 />
-                <Accordian>
-                    {gameData.map((game, index) => (
-                        <AccordianItem
-                            key={index}
-                            gameData={game}
-                            teamData={teamData}
-                            playerData={playerData[game.GAME_ID]}
-                        />
-                    ))}
-                </Accordian>
+
+
+                {gameData ? (
+                    <Accordian>
+                        {gameData.map((game, index) => (
+                            <AccordianItem
+                                key={index}
+                                gameData={game}
+                                teamData={teamData}
+                                playerData={playerData[game.GAME_ID]}
+                            />
+                        ))}
+                    </Accordian>
+                ) : (
+                    searchDate !== "" && <h2 className="words">No games found on that date.</h2>
+                )}
             </div>
         </div>
     );

@@ -1,13 +1,12 @@
 import "./Searchbar.css";
 import { useNbaData } from "../../hooks/useNbaData";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 
-const Searchbar = ({ setGameIDs, setGameData, setTeamData, setPlayerData }) => {
-    const [searchDate, setSearchDate] = useState("");
+const Searchbar = ({ searchDate, setSearchDate, setGameIDs, setGameData, setTeamData, setPlayerData }) => {
 
     const { fetchGameIDs, fetchGameDetails, fetchTeamDetails, fetchPlayerDetails } = useNbaData();
 
@@ -99,7 +98,7 @@ const Searchbar = ({ setGameIDs, setGameData, setTeamData, setPlayerData }) => {
                 type="primary"
                 onPress={handleSubmit}
             >
-                Primary
+                Search
             </AwesomeButton>
         </div>
 
