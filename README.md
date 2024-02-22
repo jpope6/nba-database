@@ -11,3 +11,6 @@ The NBA Statistics App allows users to:
 - View matchups and end scores for games on the chosen date.
 - Click on a matchup to see detailed statistics for each team.
 - Toggle between teams to compare their stats.
+
+![](src/images/nba-database1.png)
+![](src/images/nba-database2.png)
